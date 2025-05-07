@@ -7,10 +7,12 @@ public class Product {
     private String name;
     private String category;
     private String description;
-    private BigDecimal price;
-    private float rating;
+    private BigDecimal price;  // Changed to BigDecimal
+    private float productRating;  // Rating from Product table
+    private float avgRating;  // Average rating from reviews
     private int quantity;
-
+    private int reviewCount;
+    
     // Getters and setters
     public int getProductId() {
         return productId;
@@ -52,19 +54,35 @@ public class Product {
         this.price = price;
     }
 
-    public float getRating() {
-        return rating;
+    public float getProductRating() {
+        return productRating;
     }
 
-    public void setRating(float rating) {
-        this.rating = rating;
+    public void setProductRating(float productRating) {
+        this.productRating = productRating;
     }
-    
+
+    public float getAvgRating() {
+        return avgRating;
+    }
+
+    public void setAvgRating(float avgRating) {
+        this.avgRating = avgRating;
+    }
+
     public int getQuantity() {
         return quantity;
     }
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+    
+    public int getReviewCount() {
+        return reviewCount;
+    }
+    
+    public void setReviewCount(int reviewCount) {
+        this.reviewCount = reviewCount;
     }
 }

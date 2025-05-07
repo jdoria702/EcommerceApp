@@ -13,31 +13,23 @@ import java.sql.SQLException;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        try (Connection conn = DBConnection.getConnection()) {
-            // Create a new CustomerDAO instance to authenticate the customer
-            CustomerDAO customerDAO = new CustomerDAO(conn);
-            Customer customer = customerDAO.authenticate(email, password);
+        CustomerDAO customerDAO = new CustomerDAO();
+        Customer customer = customerDAO.getCustomerByEmail(email);
 
-            if (customer != null) {
-                // If authentication is successful, create a session and store the customer object
-                HttpSession session = request.getSession();
-                session.setAttribute("customer", customer);
+        if (customer != null && customer.getPassword().equals(password)) {
+            // Set customer data in session
+            HttpSession session = request.getSession();
+            session.setAttribute("customer", customer);
 
-                // Redirect to the product list page (or the products servlet)
-                response.sendRedirect(request.getContextPath() + "/products");  // Redirect to products page
-            } else {
-                // If authentication fails, set an error message and forward back to login page
-                request.setAttribute("error", "Invalid email or password.");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-            }
-        } catch (SQLException e) {
-            throw new ServletException("Database error", e);
+            // Redirect to home or profile page
+            response.sendRedirect("products");
+        } else {
+            // Invalid login, show error
+            response.sendRedirect("login.jsp?error=Invalid login");
         }
     }
 }
