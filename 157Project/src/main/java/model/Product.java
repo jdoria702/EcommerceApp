@@ -12,7 +12,8 @@ public class Product {
     private float avgRating;  // Average rating from reviews
     private int quantity;
     private int reviewCount;
-    
+    private int sellerId;  // New field for sellerId
+
     // Getters and setters
     public int getProductId() {
         return productId;
@@ -77,12 +78,20 @@ public class Product {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-    
+
     public int getReviewCount() {
         return reviewCount;
     }
-    
+
     public void setReviewCount(int reviewCount) {
         this.reviewCount = reviewCount;
+    }
+
+    public int getSellerId() {  // Getter for sellerId
+        return sellerId;
+    }
+
+    public void setSellerId(int sellerId) {  // Setter for sellerId
+        this.sellerId = sellerId;
     }
 }

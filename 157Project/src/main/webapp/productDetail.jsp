@@ -1,6 +1,7 @@
 <%@ page import="model.Customer" %>
 <%@ page import="model.Product" %>
 <%@ page import="model.Review" %>
+<%@ page import="model.Seller" %>
 <%@ page import="java.util.List" %>
 <%@ page session="true" %>
 <%@ include file="header.jsp" %>
@@ -8,6 +9,8 @@
 <%
     Product product = (Product) request.getAttribute("product");
     List<Review> reviews = (List<Review>) request.getAttribute("reviews");
+    Seller seller = (Seller) request.getAttribute("seller");
+    List<Product> sellerProducts = (List<Product>) request.getAttribute("sellerProducts");
 %>
 
 <!DOCTYPE html>
@@ -31,8 +34,32 @@
 
     <hr>
     
+	
+	 <!-- Seller Info Section -->
+    <hr>
+	    <h3>About the Seller</h3>
+	    <p><strong>Name:</strong> <%= seller.getName() %></p>
+	    <p><strong>Address:</strong> <%= seller.getAddress() %></p>
+	    <p><strong>Bio:</strong> <%= seller.getDescription() %></p>
+    <hr>
     
-	<style>
+        <!-- Products from Seller Section -->
+    <h3>Products from this Seller</h3>
+    <ul>
+        <%
+            for (Product p : sellerProducts) {
+        %>
+            <li>
+                <a href="productDetail?productId=<%= p.getProductId() %>"><%= p.getName() %></a>
+            </li>
+        <%
+            }
+        %>
+    </ul>
+
+    <hr>
+    
+    	<style>
 	    .review-container {
 	        background-color: #f9f9f9;
 	        padding: 20px;
@@ -113,8 +140,6 @@
 	        <input type="submit" value="Submit Review" />
 	    </form>
 	</div>
-
-
     
     <h3>Reviews</h3>
     <ul>

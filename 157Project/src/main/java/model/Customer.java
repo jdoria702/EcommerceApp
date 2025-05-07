@@ -25,6 +25,8 @@ public class Customer {
         this.lastName = lastName;
         this.address = address;
     }
+    
+    public Customer() {}
 
 
     // Getters and setters

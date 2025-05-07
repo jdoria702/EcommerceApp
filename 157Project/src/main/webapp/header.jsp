@@ -10,6 +10,9 @@
 
 <div style="background-color: #f4f4f4; padding: 10px; text-align: center;">
     <h2>Welcome, <%= customer.getFirstName() %>!</h2>
-    <p>Your address: <%= customer.getAddress() %></p>
+    <p>
+    	Shipping address: <%= customer.getAddress() %>
+    	<a href="changeAddress.jsp" style="margin-left: 10px;">(Change)</a>
+	</p>
     <a href="orderHistory" class="btn btn-primary">View Order History</a>
 </div>

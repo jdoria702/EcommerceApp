@@ -67,6 +67,7 @@ public class ProductDAO {
 	            // Set dynamic average rating
 	            product.setAvgRating(rs.getFloat("avg_rating"));
 	            product.setQuantity(rs.getInt("quantity"));
+	            product.setSellerId(rs.getInt("seller_id"));  // Set sellerId
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
@@ -154,6 +155,35 @@ public class ProductDAO {
         return products;
     }
 
+    // New method to get all products from a specific seller
+    public List<Product> getProductsBySellerId(int sellerId) {
+        List<Product> products = new ArrayList<>();
+        String sql = "SELECT * FROM Product WHERE seller_id = ?";
 
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, sellerId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Product product = new Product();
+                product.setProductId(rs.getInt("product_id"));
+                product.setName(rs.getString("name"));
+                product.setCategory(rs.getString("category"));
+                product.setDescription(rs.getString("description"));
+                product.setPrice(rs.getBigDecimal("price"));
+                product.setProductRating(rs.getFloat("rating"));
+                product.setQuantity(rs.getInt("quantity"));
+                product.setSellerId(rs.getInt("seller_id"));
+                products.add(product);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return products;
+    }
 
 }
