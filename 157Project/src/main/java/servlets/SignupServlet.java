@@ -20,14 +20,27 @@ public class SignupServlet extends HttpServlet {
         String lastName = request.getParameter("lastName");
         String address = request.getParameter("address");
 
-        // Create Customer object and save to the database
-        Customer newCustomer = new Customer(email, password, firstName, lastName, address);
-
-        // Save customer to the database (use your DAO here)
         CustomerDAO customerDAO = new CustomerDAO();
-        customerDAO.saveCustomer(newCustomer);
 
-        // Redirect to login page or directly to the login page after signup
-        response.sendRedirect("login.jsp");
+        try {
+            // Check if email is already registered
+            if (customerDAO.getCustomerByEmail(email) != null) {
+                request.setAttribute("error", "An account with this email already exists.");
+                request.getRequestDispatcher("index.jsp").forward(request, response);
+                return;
+            }
+
+            // Save new customer
+            Customer newCustomer = new Customer(email, password, firstName, lastName, address);
+            customerDAO.saveCustomer(newCustomer);
+
+            // Redirect to login
+            response.sendRedirect("login.jsp");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("error", "An unexpected error occurred.");
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+        }
     }
 }
