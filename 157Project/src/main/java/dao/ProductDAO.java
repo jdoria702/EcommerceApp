@@ -185,5 +185,24 @@ public class ProductDAO {
 
         return products;
     }
+    
+    public List<String> getDistinctCategories() {
+        List<String> categories = new ArrayList<>();
+        String sql = "SELECT DISTINCT category FROM Product WHERE category IS NOT NULL ORDER BY category ASC";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                categories.add(rs.getString("category"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return categories;
+    }
 
 }

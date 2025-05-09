@@ -37,9 +37,11 @@ public class ProductListServlet extends HttpServlet {
         // Call the DAO to get the filtered products
         ProductDAO productDAO = new ProductDAO();
         List<Product> products = productDAO.searchAndFilterProducts(keyword, category, minPrice, maxPrice);
+        List<String> categories = productDAO.getDistinctCategories();
 
         // Set the product list as a request attribute
         request.setAttribute("products", products);
+        request.setAttribute("categories", categories);
 
         // Forward the request to the JSP page to display the results
         request.getRequestDispatcher("/products.jsp").forward(request, response);

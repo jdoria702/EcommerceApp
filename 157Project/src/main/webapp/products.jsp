@@ -17,16 +17,24 @@
         <label for="keyword">Search for product name:</label>
         <input type="text" name="keyword" id="keyword" placeholder="Search for product name..."/><br><br>
         
-        <!-- Category Dropdown -->
-        <label for="category">Category:</label>
-        <select name="category" id="category">
-            <option value="">All Categories</option>
-            <!-- Add more categories here as needed -->
-            <option value="Electronics">Electronics</option>
-            <option value="Furniture">Furniture</option>
-            <option value="Clothing">Clothing</option>
-            <option value="Toys">Toys</option>
-        </select><br><br>
+		<!-- Category Dropdown -->
+		<label for="category">Category:</label>
+		<select name="category" id="category">
+		    <option value="">All Categories</option>
+		    <%
+		        List<String> categories = (List<String>) request.getAttribute("categories");
+		        String selectedCategory = request.getParameter("category");
+		
+		        if (categories != null) {
+		            for (String cat : categories) {
+		                String selected = cat.equals(selectedCategory) ? "selected" : "";
+		    %>
+		                <option value="<%= cat %>" <%= selected %>><%= cat %></option>
+		    <%
+		            }
+		        }
+		    %>
+		</select><br><br>
         
         <!-- Price Range Inputs -->
         <label for="minPrice">Min Price:</label>
