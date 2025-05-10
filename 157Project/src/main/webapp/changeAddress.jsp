@@ -70,25 +70,20 @@
 <body>
 
 <div class="page-container">
-    <h2>Change Shipping Address</h2>
+	<h2>Change Shipping Address</h2>
+	
+	<form action="changeAddress" method="post">
+	    <label>New Address:</label>
+	    <input type="text" name="newAddress" required><br><br>
+	
+	    <button type="submit">Update Address</button>
+	</form>
+	
+	<% String error = (String) request.getAttribute("error"); %>
+	<% if (error != null) { %>
+	    <p style="color: red;"><%= error %></p>
+	<% } %>
 
-    <form action="changeAddress" method="post">
-        <label>Email:</label>
-        <input type="email" name="email" required>
-
-        <label>Password:</label>
-        <input type="password" name="password" required>
-
-        <label>New Address:</label>
-        <input type="text" name="newAddress" required>
-
-        <button type="submit">Update Address</button>
-    </form>
-
-    <% String error = (String) request.getAttribute("error"); %>
-    <% if (error != null) { %>
-        <p class="error-message"><%= error %></p>
-    <% } %>
 </div>
 
 </body>

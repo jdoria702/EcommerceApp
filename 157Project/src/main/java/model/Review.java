@@ -6,9 +6,8 @@ public class Review {
     private int customerId;
     private int rating;
     private String review;
-    private String reviewerName; // Changed from setCustomerName() to reviewerName
+    private String reviewerName;
 
-    // Getters and Setters
     public int getReviewId() {
         return reviewId;
     }
@@ -49,11 +48,11 @@ public class Review {
         this.review = review;
     }
 
-    public String getReviewerName() { // Changed
+    public String getReviewerName() {
         return reviewerName;
     }
 
-    public void setReviewerName(String reviewerName) { // Changed
+    public void setReviewerName(String reviewerName) {
         this.reviewerName = reviewerName;
     }
 }

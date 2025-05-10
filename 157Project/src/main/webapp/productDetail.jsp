@@ -35,7 +35,6 @@
     <hr>
     
 	
-	 <!-- Seller Info Section -->
     <hr>
 	    <h3>About the Seller</h3>
 	    <p><strong>Name:</strong> <%= seller.getName() %></p>
@@ -43,7 +42,6 @@
 	    <p><strong>Bio:</strong> <%= seller.getDescription() %></p>
     <hr>
     
-        <!-- Products from Seller Section -->
     <h3>Products from this Seller</h3>
     <ul>
         <%

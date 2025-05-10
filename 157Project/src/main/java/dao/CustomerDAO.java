@@ -6,8 +6,6 @@ import util.DBConnection;
 import java.sql.*;
 
 public class CustomerDAO {
-
-    // Save customer to the database
     public void saveCustomer(Customer customer) {
         String sql = "INSERT INTO Customer (email, password, first_name, last_name, address) VALUES (?, ?, ?, ?, ?)";
 
@@ -26,7 +24,6 @@ public class CustomerDAO {
         }
     }
 
-    // Retrieve customer by email (for login)
     public Customer getCustomerByEmail(String email) {
         String sql = "SELECT * FROM Customer WHERE email = ?";
         Customer customer = null;

@@ -15,25 +15,22 @@ public class ChangeAddressServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        String newAddress = request.getParameter("newAddress");
+        HttpSession session = request.getSession();
+        Customer loggedInCustomer = (Customer) session.getAttribute("customer");
 
-        CustomerDAO customerDAO = new CustomerDAO();
-        Customer customer = customerDAO.getCustomerByEmailAndPassword(email, password);
-
-        if (customer != null) {
-            customerDAO.updateAddress(customer.getCustomerId(), newAddress);
-
-            // Update session
-            HttpSession session = request.getSession();
-            customer.setAddress(newAddress);
-            session.setAttribute("customer", customer);
-
-            response.sendRedirect("products");
-        } else {
-            request.setAttribute("error", "Invalid email or password.");
-            request.getRequestDispatcher("changeAddress.jsp").forward(request, response);
+        if (loggedInCustomer == null) {
+            response.sendRedirect("login.jsp");
+            return;
         }
+
+        String newAddress = request.getParameter("newAddress");
+        CustomerDAO customerDAO = new CustomerDAO();
+
+        customerDAO.updateAddress(loggedInCustomer.getCustomerId(), newAddress);
+
+        loggedInCustomer.setAddress(newAddress);
+        session.setAttribute("customer", loggedInCustomer);
+
+        response.sendRedirect("products");
     }
 }

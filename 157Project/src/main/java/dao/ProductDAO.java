@@ -32,9 +32,9 @@ public class ProductDAO {
 	            product.setPrice(rs.getBigDecimal("price"));
 	            product.setCategory(rs.getString("category"));
 	            product.setQuantity(rs.getInt("quantity"));
-	            product.setProductRating(rs.getFloat("product_rating"));  // Set product rating
-	            product.setAvgRating(rs.getFloat("avg_rating"));  // Set average rating
-	            product.setReviewCount(rs.getInt("review_count"));  // Set review count
+	            product.setProductRating(rs.getFloat("product_rating"));
+	            product.setAvgRating(rs.getFloat("avg_rating"));
+	            product.setReviewCount(rs.getInt("review_count"));
 	            productList.add(product);
 	        }
 	    } catch (SQLException e) {
@@ -43,8 +43,6 @@ public class ProductDAO {
 	    return productList;
 	}
 
-
-	// Get product by ID
 	public Product getProductById(int productId) {
 	    Product product = null;
 	    try (Connection conn = DBConnection.getConnection()) {
@@ -60,14 +58,12 @@ public class ProductDAO {
 	            product = new Product();
 	            product.setProductId(rs.getInt("product_id"));
 	            product.setName(rs.getString("name"));
-	            product.setCategory(rs.getString("category"));  // Add this line to set the category
+	            product.setCategory(rs.getString("category"));
 	            product.setDescription(rs.getString("description"));
-	            // Set price as BigDecimal
-	            product.setPrice(rs.getBigDecimal("price"));  // Using BigDecimal
-	            // Set dynamic average rating
+	            product.setPrice(rs.getBigDecimal("price"));
 	            product.setAvgRating(rs.getFloat("avg_rating"));
 	            product.setQuantity(rs.getInt("quantity"));
-	            product.setSellerId(rs.getInt("seller_id"));  // Set sellerId
+	            product.setSellerId(rs.getInt("seller_id"));
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
@@ -75,8 +71,6 @@ public class ProductDAO {
 	    return product;
 	}
 
-
-    // Update product quantity
     public void updateProductQuantity(int productId, int newQuantity) {
         try (Connection conn = DBConnection.getConnection()) {
             String sql = "UPDATE Product SET quantity = ? WHERE product_id = ?";
@@ -97,9 +91,7 @@ public class ProductDAO {
                                              "       COUNT(r.rating) AS review_count " +
                                              "FROM Product p " +
                                              "LEFT JOIN Review r ON p.product_id = r.product_id " +
-                                             "WHERE 1=1");  // Start with a valid condition
-
-        // Dynamically add conditions based on the search filters
+                                             "WHERE 1=1");
         if (keyword != null && !keyword.isEmpty()) {
             sql.append(" AND p.name LIKE ?");
         }
@@ -113,25 +105,23 @@ public class ProductDAO {
             sql.append(" AND p.price <= ?");
         }
 
-        sql.append(" GROUP BY p.product_id");  // Group by product_id to get the correct aggregates
+        sql.append(" GROUP BY p.product_id");
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql.toString())) {
 
             int index = 1;
-
-            // Set the parameters for the dynamic filters
             if (keyword != null && !keyword.isEmpty()) {
-                stmt.setString(index++, "%" + keyword + "%");  // Search for product names that contain the keyword
+                stmt.setString(index++, "%" + keyword + "%");
             }
             if (category != null && !category.isEmpty()) {
-                stmt.setString(index++, category);  // Filter by category
+                stmt.setString(index++, category);
             }
             if (minPrice != null) {
-                stmt.setBigDecimal(index++, minPrice);  // Filter by minimum price
+                stmt.setBigDecimal(index++, minPrice);
             }
             if (maxPrice != null) {
-                stmt.setBigDecimal(index++, maxPrice);  // Filter by maximum price
+                stmt.setBigDecimal(index++, maxPrice);
             }
 
             ResultSet rs = stmt.executeQuery();
@@ -143,9 +133,9 @@ public class ProductDAO {
                 product.setDescription(rs.getString("description"));
                 product.setPrice(rs.getBigDecimal("price"));
                 product.setQuantity(rs.getInt("quantity"));
-                product.setProductRating(rs.getFloat("product_rating"));  // Get product rating from the table
-                product.setAvgRating(rs.getFloat("avg_rating"));  // Get dynamic average rating
-                product.setReviewCount(rs.getInt("review_count"));  // Get review count
+                product.setProductRating(rs.getFloat("product_rating"));
+                product.setAvgRating(rs.getFloat("avg_rating"));
+                product.setReviewCount(rs.getInt("review_count"));
                 products.add(product);
             }
         } catch (SQLException e) {
@@ -155,7 +145,6 @@ public class ProductDAO {
         return products;
     }
 
-    // New method to get all products from a specific seller
     public List<Product> getProductsBySellerId(int sellerId) {
         List<Product> products = new ArrayList<>();
         String sql = "SELECT * FROM Product WHERE seller_id = ?";

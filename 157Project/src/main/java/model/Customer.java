@@ -1,14 +1,13 @@
 package model;
 
 public class Customer {
-    private int customerId;  // Added customerId
+    private int customerId;
     private String email;
     private String password;
     private String firstName;
     private String lastName;
     private String address;
 
-    // Constructor
     public Customer(int customerId, String email, String password, String firstName, String lastName, String address) {
         this.customerId = customerId;
         this.email = email;
@@ -29,7 +28,6 @@ public class Customer {
     public Customer() {}
 
 
-    // Getters and setters
     public int getCustomerId() {
         return customerId;
     }

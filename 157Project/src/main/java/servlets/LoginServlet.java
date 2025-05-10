@@ -21,14 +21,11 @@ public class LoginServlet extends HttpServlet {
         Customer customer = customerDAO.getCustomerByEmail(email);
 
         if (customer != null && customer.getPassword().equals(password)) {
-            // Set customer data in session
             HttpSession session = request.getSession();
             session.setAttribute("customer", customer);
 
-            // Redirect to home or profile page
             response.sendRedirect("products");
         } else {
-            // Invalid login, show error
             response.sendRedirect("login.jsp?error=Invalid login");
         }
     }

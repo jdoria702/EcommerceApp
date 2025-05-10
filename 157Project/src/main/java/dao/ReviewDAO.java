@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReviewDAO {
-
-    // Method to retrieve reviews for a specific product
     public List<Review> getReviewsByProductId(int productId) {
         List<Review> reviews = new ArrayList<>();
         try (Connection conn = DBConnection.getConnection()) {
@@ -34,7 +32,6 @@ public class ReviewDAO {
         return reviews;
     }
 
-    // Method to save a new review
     public void saveReview(Review review) {
         try (Connection conn = DBConnection.getConnection()) {
             String sql = "INSERT INTO Review (product_id, rating, review, customer_id, reviewer_name) " +

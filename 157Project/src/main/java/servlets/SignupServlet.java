@@ -23,18 +23,15 @@ public class SignupServlet extends HttpServlet {
         CustomerDAO customerDAO = new CustomerDAO();
 
         try {
-            // Check if email is already registered
             if (customerDAO.getCustomerByEmail(email) != null) {
                 request.setAttribute("error", "An account with this email already exists.");
                 request.getRequestDispatcher("index.jsp").forward(request, response);
                 return;
             }
 
-            // Save new customer
             Customer newCustomer = new Customer(email, password, firstName, lastName, address);
             customerDAO.saveCustomer(newCustomer);
 
-            // Redirect to login
             response.sendRedirect("login.jsp");
 
         } catch (Exception e) {

@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDAO {
-
-    // Method to get order history for a customer
 	public List<Order> getOrderHistory(int customerId) {
 	    List<Order> orders = new ArrayList<>();
 	    String sql = "SELECT o.order_id, p.name AS product_name, o.quantity, o.order_date, " +
@@ -27,7 +25,7 @@ public class OrderDAO {
 	        while (rs.next()) {
 	            Order order = new Order();
 	            order.setOrderId(rs.getInt("order_id"));
-	            order.setProductName(rs.getString("product_name"));  // AS product_name used above
+	            order.setProductName(rs.getString("product_name"));
 	            order.setQuantity(rs.getInt("quantity"));
 	            order.setOrderDate(rs.getTimestamp("order_date"));
 	            order.setTotalPrice(rs.getDouble("total_price"));
@@ -41,8 +39,6 @@ public class OrderDAO {
 	    return orders;
 	}
 
-    
-    // Method to add an order
     public void addOrder(int customerId, int productId, int quantity) {
         String sql = "INSERT INTO Orders (customer_id, product_id, quantity) VALUES (?, ?, ?)";
 

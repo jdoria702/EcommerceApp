@@ -23,11 +23,9 @@ public class OrderHistoryServlet extends HttpServlet {
             return;
         }
 
-        // Fetch the order history for the logged-in customer
         OrderDAO orderDAO = new OrderDAO();
         List<Order> orderHistory = orderDAO.getOrderHistory(customer.getCustomerId());
 
-        // Set the order history attribute and forward to the JSP page
         request.setAttribute("orderHistory", orderHistory);
         request.getRequestDispatcher("orderHistory.jsp").forward(request, response);
     }

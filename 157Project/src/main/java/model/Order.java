@@ -9,7 +9,6 @@ public class Order {
     private Timestamp orderDate;
     private double totalPrice;
 
-    // Getters and Setters
     public int getOrderId() {
         return orderId;
     }

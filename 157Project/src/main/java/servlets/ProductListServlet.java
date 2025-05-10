@@ -16,13 +16,11 @@ public class ProductListServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Retrieve parameters from the request
         String keyword = request.getParameter("keyword");
         String category = request.getParameter("category");
         BigDecimal minPrice = null;
         BigDecimal maxPrice = null;
 
-        // Parse the price range if provided
         try {
             if (request.getParameter("minPrice") != null && !request.getParameter("minPrice").isEmpty()) {
                 minPrice = new BigDecimal(request.getParameter("minPrice"));
@@ -30,20 +28,15 @@ public class ProductListServlet extends HttpServlet {
             if (request.getParameter("maxPrice") != null && !request.getParameter("maxPrice").isEmpty()) {
                 maxPrice = new BigDecimal(request.getParameter("maxPrice"));
             }
-        } catch (NumberFormatException e) {
-            // Handle invalid price format if needed
-        }
+        } catch (NumberFormatException e) {}
 
-        // Call the DAO to get the filtered products
         ProductDAO productDAO = new ProductDAO();
         List<Product> products = productDAO.searchAndFilterProducts(keyword, category, minPrice, maxPrice);
         List<String> categories = productDAO.getDistinctCategories();
 
-        // Set the product list as a request attribute
         request.setAttribute("products", products);
         request.setAttribute("categories", categories);
 
-        // Forward the request to the JSP page to display the results
         request.getRequestDispatcher("/products.jsp").forward(request, response);
     }
 }

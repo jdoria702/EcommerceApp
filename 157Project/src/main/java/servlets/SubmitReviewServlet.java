@@ -18,7 +18,6 @@ public class SubmitReviewServlet extends HttpServlet {
         int customerId = Integer.parseInt(request.getParameter("customerId"));
         String reviewerName = request.getParameter("reviewerName");
 
-        // Create a new Review object
         Review newReview = new Review();
         newReview.setProductId(productId);
         newReview.setRating(rating);
@@ -26,11 +25,9 @@ public class SubmitReviewServlet extends HttpServlet {
         newReview.setCustomerId(customerId);
         newReview.setReviewerName(reviewerName);
 
-        // Use the DAO to save the review in the database
         ReviewDAO reviewDAO = new ReviewDAO();
         reviewDAO.saveReview(newReview);
 
-        // After saving the review, redirect back to the product details page
         response.sendRedirect("productDetail?productId=" + productId);
     }
 }
