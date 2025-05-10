@@ -143,16 +143,7 @@
     <ul>
 		<% 
 		    Customer loggedInCustomer = (Customer) session.getAttribute("customer");
-		
-	    if (loggedInCustomer == null) {
-	        out.println("<p style='color: red;'>You are not logged in!</p>");
-	    } else {
-	        out.println("<p style='color: green;'>Logged in as customer ID: " + loggedInCustomer.getCustomerId() + "</p>");
-	    }
-		
 		    for (Review review : reviews) { 
-		        out.println("<p>Review Customer ID: " + review.getCustomerId() + "</p>");
-		        out.println("<p>Logged-in Customer ID: " + loggedInCustomer.getCustomerId() + "</p>");
 		%>
 		    <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
 		        <strong><%= review.getReviewerName() %></strong> - <%= review.getRating() %> stars<br>
