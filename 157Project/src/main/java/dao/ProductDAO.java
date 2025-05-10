@@ -193,5 +193,4 @@ public class ProductDAO {
 
         return categories;
     }
-
 }
