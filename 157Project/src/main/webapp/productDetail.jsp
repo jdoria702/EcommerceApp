@@ -122,6 +122,7 @@
 	    <form action="submitReview" method="post" class="review-form">
 	        <input type="hidden" name="productId" value="<%= product.getProductId() %>" />
 	        <input type="hidden" name="customerId" value="<%= customer.getCustomerId() %>" />
+	        <input type="hidden" name="reviewerName" value="<%= customer.getFirstName() + " " + customer.getLastName() %>" />
 	
 	        <div class="rating-input">
 	            <label for="rating">Rating: </label>
